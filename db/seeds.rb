@@ -8,10 +8,10 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-puts "Cleaning seed"
+puts "Cleaning seed..."
 Restaurant.destroy_all
 
-puts "Seeding"
+puts "Seeding..."
 
 5.times do
   Restaurant.create!(
@@ -19,9 +19,26 @@ puts "Seeding"
     address: Faker::Address.street_address,
     phone_number: Faker::PhoneNumber.cell_phone,
     category: %w(chinese italian japanese french belgian).sample
+
   )
 end
 
-puts "Creating #{Restaurant.name}"
+Restaurant.all.each do |restaurant|
+  puts "Creating #{restaurant.name}"
+end
 
-puts "Finished"
+puts "Random restaurants created!"
+
+puts "Now adding and cleaning random reviews..."
+Review.destroy_all
+
+Restaurant.all.each do |restaurant|
+  5.times do
+    restaurant.reviews.create!(
+      rating: rand(1..5),
+      content: Faker::Restaurant.review
+    )
+  end
+end
+puts "Reviews Created!"
+puts "All done!"
