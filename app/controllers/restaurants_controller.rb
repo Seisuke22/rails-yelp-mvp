@@ -19,6 +19,8 @@ class RestaurantsController < ApplicationController
 
   def show
     @restaurant = Restaurant.find(params[:id])
+    # Regarding the strong params
+    @review = Review.new
   end
 
   private
